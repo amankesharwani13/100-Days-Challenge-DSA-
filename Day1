@@ -1,1 +1,26 @@
+257. Binary Tree Paths
+class Solution {
+public:
+    void solve(TreeNode* root, vector<string>& ans, string s) {
+        if (root == NULL) {
+            return;
+        }
+        if (root->left == NULL && root->right == NULL) {
+            s += to_string(root->val);
+            ans.push_back(s);
+            s.pop_back();
+            return;
+        }
+        s += to_string(root->val) + "->";
+        solve(root->left, ans, s);
+        solve(root->right, ans, s);
 
+        s.pop_back();
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> ans;
+        string s;
+        solve(root, ans, s);
+        return ans;
+    }
+};
