@@ -39,3 +39,29 @@ public:
             return root;
     }
 };
+
+112. Path Sum
+class Solution {
+public:
+    bool ans = false;
+    void solve(TreeNode* root, int targetSum, int &sum){
+         if(root == NULL){
+              return;
+         }
+         sum += root->val;
+         if(root->left == NULL && root->right == NULL && sum == targetSum){
+            ans = true;
+               return;
+         }
+         solve(root->left, targetSum, sum);
+         solve(root->right, targetSum, sum);
+
+         sum -= root->val;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        int sum = 0;
+        if(root == NULL)return false;
+        solve(root, targetSum, sum);
+        return ans;
+    }
+};
