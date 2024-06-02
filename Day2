@@ -36,3 +36,38 @@ public:
         return sum;
     }
 };
+
+110. Balanced Binary Tree
+class Solution {
+public:
+    bool ans = true;
+    int solve(TreeNode* root){
+        if(root == NULL)return 0;
+        int l = solve(root->left);
+        int r = solve(root->right);
+        if(abs(l-r) > 1)ans = false;
+        return 1+max(l,r);
+    }
+    bool isBalanced(TreeNode* root) {
+        if(root == NULL)return true;
+        solve(root);
+        return ans;
+    }
+};
+
+94. Binary Tree Inorder Traversal
+class Solution {
+public:
+    void solve(TreeNode* root, vector<int> & ans){
+        if(root == NULL)return;
+        solve(root->left, ans);
+        ans.push_back(root->val);
+        solve(root->right, ans);
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int>ans;
+        if(root == NULL)return ans;
+        solve(root, ans);
+        return ans;
+    }
+};
