@@ -1,0 +1,19 @@
+1448. Count Good Nodes in Binary Tree
+class Solution {
+public:
+    void solve(TreeNode* root, int &ans,int maxSoFar){
+        if(root == NULL)return;
+        maxSoFar = max(maxSoFar, root->val);
+        if(root->left != NULL && root->left->val >= maxSoFar)ans++;
+        if(root->right != NULL && root->right->val >= maxSoFar)ans++;
+        solve(root->left,ans,maxSoFar);
+        solve(root->right,ans,maxSoFar);
+    }
+    int goodNodes(TreeNode* root) {
+        int ans = 1;
+        solve(root, ans,INT_MIN);
+        return ans;
+    }
+};
+
+
