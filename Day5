@@ -1,0 +1,26 @@
+1002. Find Common Characters
+class Solution {
+public:
+    vector<string> commonChars(vector<string>& words) {
+        vector<int>common(26,INT_MAX);
+        vector<string>ans;
+        for(auto x:words){
+            vector<int>v(26,0);
+            for(auto y:x){
+                v[y-'a']++;
+            }
+            for(int i=0;i<26;i++){
+                common[i] = min(common[i],v[i]);
+            }
+        }
+        for(int i=0;i<26;i++){
+           for(int j=0;j<common[i];j++){
+              char x = i+'a';
+              string s;
+              s = x;
+              ans.push_back(s);
+           }
+        }
+        return ans;
+    }
+};
