@@ -1,0 +1,29 @@
+945. Minimum Increment to Make Array Unique
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& nums) {
+        // vector<int>visited(10e5,0);
+        // int cnt = 0;
+        // visited[nums[0]] = 1; 
+        // for(int i=1;i<nums.size();i++){
+        //     while(visited[nums[i]] == 1){
+        //         nums[i]++;
+        //         cnt++;
+        //     }
+        //     visited[nums[i]] = 1;
+        // }
+        // return cnt;
+
+
+        // More Optimisted Way
+        int ans = 0;
+        sort(nums.begin(),nums.end());
+        for(int i=1;i<nums.size();i++){
+            if(nums[i-1] >= nums[i]){
+                ans += (nums[i-1] - nums[i] +1);
+                nums[i] = nums[i-1] + 1;
+            }
+        }
+        return ans;
+    }
+};
