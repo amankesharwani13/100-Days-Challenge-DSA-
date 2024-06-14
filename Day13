@@ -27,3 +27,25 @@ public:
         return ans;
     }
 };
+
+56. Merge Intervals
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>>ans;
+        sort(intervals.begin(),intervals.end());
+         vector<int>index(intervals[0]);
+        for(int i=1;i<intervals.size();i++){
+            if(index[1] >= intervals[i][0] && index[0] <= intervals[i][1]){
+                index[0] = min(index[0], intervals[i][0]);
+                index[1] = max(index[1], intervals[i][1]);
+            }
+            else{
+                ans.push_back(index);
+                index = intervals[i];
+            }
+        }
+        ans.push_back(index);
+        return ans;
+    }
+};
