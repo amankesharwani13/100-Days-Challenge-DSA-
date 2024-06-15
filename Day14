@@ -1,0 +1,31 @@
+502. IPO
+class Solution {
+public:
+    static bool cmp(pair<int,int>& a, pair<int,int>& b){
+        if(a.first < b.first)return true;
+        else if(a.first == b.first)return a.second < b.second;
+        else return false;
+    }
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        int n= profits.size();
+        vector<pair<int,int>>v;
+        for(int i=0;i<n;i++){
+            pair<int,int>p={capital[i], profits[i]};
+            v.push_back(p);
+        }
+        sort(v.begin(),v.end(),cmp);
+        priority_queue<int>pq;
+        int i = 0;
+        while(k--){
+            while(i<n && v[i].first <= w){
+                pq.push(v[i++].second);
+            }
+            if(pq.empty())break;
+            else if(!pq.empty()){
+                w += pq.top();
+                pq.pop();
+            }
+        }
+        return w;
+    }
+};
