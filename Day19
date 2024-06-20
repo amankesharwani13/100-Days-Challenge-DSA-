@@ -1,0 +1,34 @@
+1552. Magnetic Force Between Two Balls
+bool isPossible(vector<int>& position,int mid,int m){
+    int ballcount=1;
+    int glasscount=position[0];
+    for(int i=0;i<position.size();i++){
+        if((position[i]-glasscount)>=mid){
+            ballcount++;
+            if(ballcount==m){
+                return true;
+            }
+            glasscount=position[i];
+        }
+    }
+    return false;
+}
+class Solution {
+public:
+    int maxDistance(vector<int>& position, int m) {
+        sort(position.begin(),position.end());
+        int l=0,h,mid,ans;
+        h=*max_element(position.begin(),position.end());
+        while(l<=h){
+            mid=l+(h-l)/2;
+            if(isPossible(position,mid,m)){
+                ans=mid;
+                l=mid+1;
+            }
+            else{
+                h=mid-1;
+            }
+        }
+        return ans;
+    }
+};
