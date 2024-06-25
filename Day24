@@ -1,0 +1,18 @@
+1038. Binary Search Tree to Greater Sum Tree
+class Solution {
+public:
+    void solve(TreeNode* p, int &currSum){
+        if(p == NULL)return;
+        solve(p->right, currSum);
+        currSum = currSum + p->val;
+        p->val = currSum;
+        solve(p->left, currSum);
+    }
+    TreeNode* bstToGst(TreeNode* root) {
+        if(root == NULL)return root;
+        TreeNode* p = root;
+        int currSum  = 0;
+        solve(p, currSum);
+        return root;
+    }
+};
