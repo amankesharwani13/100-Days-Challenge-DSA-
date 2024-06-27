@@ -7,3 +7,34 @@ public:
         else return edges[0][1];
     }
 };
+
+
+139. Word Break
+class Solution {
+public:
+    int solve(string s, vector<string>& wordDict, unordered_map<string, int>&dp){
+         int size = s.length();
+         if(size == 0)return 1;
+
+         if (dp.find(s) != dp.end()) return dp[s];
+         for(int i=1;i<=size;i++){
+            int f = 0;
+            string st = s.substr(0,i);
+            for(int j=0;j<wordDict.size();j++){
+                if(st.compare(wordDict[j]) == 0){
+                    f = 1;
+                    break;
+                }
+            }
+            if(f == 1 && solve(s.substr(i,size-i), wordDict, dp) == 1)return dp[s] = 1;
+         }
+         return dp[s] = 0;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_map<string,int>dp;
+        
+        int ans = solve(s, wordDict, dp);
+        if(ans == 1)return true;
+        return false;
+    }
+};
