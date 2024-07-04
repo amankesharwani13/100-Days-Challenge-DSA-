@@ -1,0 +1,22 @@
+2181. Merge Nodes in Between Zeros
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode* ans = new ListNode(0);
+        ListNode* ans1 = ans;
+        head = head->next;
+        while (head != NULL) {
+            int value = 0;
+            while (head->val != 0) {
+                value += head->val;
+                head = head->next;
+            }
+            ListNode* p = new ListNode(value);
+            ans->next = p;
+            ans = ans->next;
+            head = head->next;
+        }
+        ans1 = ans1->next;
+        return ans1;
+    }
+};
