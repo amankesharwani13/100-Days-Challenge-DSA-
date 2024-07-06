@@ -14,3 +14,29 @@ public:
         return index;
     }
 };
+
+
+25. Reverse Nodes in k-Group
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        vector<int>v;
+        ListNode* p = head;
+        ListNode* q = head;
+        while(p != NULL){
+            v.push_back(p->val);
+            p = p->next;
+        }
+        int num = v.size()/k;
+        for(int i=0;i<v.size() && num > 0; i+=k){
+            reverse(v.begin()+i, v.begin()+i+k);
+            num--;
+        }
+        int i = 0;
+        while(q != NULL && i < v.size()){
+            q->val = v[i++];
+            q = q->next;
+        }
+        return head;
+    }
+};
