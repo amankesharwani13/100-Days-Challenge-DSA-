@@ -1,0 +1,16 @@
+2582. Pass the Pillow
+class Solution {
+public:
+    int passThePillow(int n, int time) {
+        int direction = 1, index = 1;
+        int full_round = 2*(n-1);
+        time %= (full_round);
+        for(int i=0;i<time;i++){
+            index += direction;
+            if(index == n || index == 1){
+                direction *= -1;
+            }
+        }
+        return index;
+    }
+};
