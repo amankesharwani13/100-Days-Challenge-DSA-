@@ -48,3 +48,29 @@ public:
         return ans;
     }
 };
+
+889. Construct Binary Tree from Preorder and Postorder Traversal
+class Solution {
+public:
+    int findPosition(vector<int> & postorder, int element, int n){
+        for(int i=0;i<n;i++){
+            if(postorder[i] == element)return i;
+        }
+        return -1;
+    }
+    TreeNode* solve(vector<int>& preorder, vector<int>& postorder, int &preIndex, int startpostorder, int endpostorder, int n){
+        if(preIndex >= n || startpostorder > endpostorder)return NULL;
+        TreeNode* root = new TreeNode(preorder[preIndex]);
+        preIndex++;
+        if(preIndex >= n || startpostorder == endpostorder)return root;
+        int position = findPosition(postorder, preorder[preIndex], n);
+        root->left = solve(preorder, postorder, preIndex, startpostorder, position, n);
+        root->right = solve(preorder, postorder, preIndex, position + 1, endpostorder - 1, n);
+        return root;
+    }
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+        int preIndex = 0, n = postorder.size();
+        TreeNode* ans = solve(preorder, postorder, preIndex, 0, n-1, n);
+        return ans;
+    }
+};
