@@ -19,3 +19,30 @@ public:
         return ans;
     }
 };
+
+
+1382. Balance a Binary Search Tree
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int>& v){
+        if(root == NULL)return;
+        inorder(root->left, v);
+        v.push_back(root->val);
+        inorder(root->right, v);
+    }
+    TreeNode* balanced(int s, int e, vector<int>& v){
+        if(s > e)return NULL;
+        int mid = s + (e - s)/2;
+        TreeNode* temp = new TreeNode(v[mid]);
+        temp->left = balanced(s, mid-1, v);
+        temp->right = balanced(mid+1, e, v);
+        return temp;
+    }
+    TreeNode* balanceBST(TreeNode* root) {
+        if(root == NULL)return root;
+        vector<int>v;
+        inorder(root, v);
+        int s = 0, e = v.size() - 1;
+        return balanced(s, e, v);
+    }
+};
