@@ -1,0 +1,21 @@
+1701. Average Waiting Time
+class Solution {
+public:
+    double averageWaitingTime(vector<vector<int>>& customers) {
+        double ans = 0.00000;
+        int n = customers.size();
+        double waitingTime = customers[0][1], currTime = customers[0][0] + customers[0][1];
+        for(int i=1;i<n;i++){
+            if(currTime >= customers[i][0]){
+             currTime += customers[i][1];
+             waitingTime += (currTime - customers[i][0]);
+            }
+            else{
+                currTime = customers[i][0] + customers[i][1];
+                waitingTime += customers[i][1];
+            }
+        }
+        ans = (double)waitingTime/n;
+        return ans;
+    }
+};
