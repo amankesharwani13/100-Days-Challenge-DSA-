@@ -44,3 +44,23 @@ public:
         return solve(0, job, startTime, n, dp);
     }
 };
+
+1094. Car Pooling
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        map<int,int>m;
+        for(int i=0;i<trips.size();i++){
+            int start = trips[i][1];
+            int end = trips[i][2];
+            m[start] += trips[i][0];
+            m[end] -= trips[i][0];
+        }
+        int sum = 0;
+        for(auto x: m){
+            sum += x.second;
+            if(sum > capacity)return false;
+        }
+        return true;
+    }
+};
