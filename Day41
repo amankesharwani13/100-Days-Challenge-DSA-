@@ -48,3 +48,49 @@ public:
         return ans;
     }
 };
+
+909. Snakes and Ladders
+class Solution {
+public:
+    pair<int,int> findCoordinate(int val, int n){
+        int RT = (val - 1)/n;
+        int row = (n-1)-RT;
+        int col = (val - 1)%n;
+        if((n % 2 == 0 && row % 2 == 0) || (n % 2 != 0 && row % 2 != 0)){
+            col = (n - 1) - col;
+        }
+        return {row, col};
+    }
+    int snakesAndLadders(vector<vector<int>>& board) {
+       int steps = 0, n = board.size();
+       vector<vector<int>>visited(n,vector<int>(n,0));
+       queue<int>q;
+       q.push(1);
+       visited[n-1][0] = 1;
+       while(!q.empty()){
+        int size = q.size();
+        while(size--){
+             int temp = q.front();
+             q.pop();
+             if(temp == n*n)return steps;
+            for(int k=1;k<=6;k++){
+                int val = temp + k;
+                if(val > n*n)break;
+                pair<int,int>coordinate = findCoordinate(val, n);
+                int row = coordinate.first;
+                int col = coordinate.second;
+                if(visited[row][col] == true)continue;
+                visited[row][col] = true;
+                if(board[row][col] == -1){
+                    q.push(val);
+                }
+                else{
+                    q.push(board[row][col]);
+                }
+            }
+        }
+          steps++;
+       }
+       return -1; 
+    }
+};
