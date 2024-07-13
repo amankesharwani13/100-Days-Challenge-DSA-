@@ -53,3 +53,30 @@ public:
         return result;
     }
 };
+
+
+688. Knight Probability in Chessboard
+class Solution {
+public:
+    
+    double solve(int n, int k, int row, int column, vector<vector<vector<double>>>& memo){
+        if(row < 0 || column < 0 || row >= n || column >= n)return 0;
+        if(k == 0)return 1;
+        double ans = 0.0;
+        if(memo[row][column][k] != -1)return memo[row][column][k];
+        int arr[8][8] = {{1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1}, {-2,1}, {-1,2}};
+        for(int i=0;i<8;i++){
+            int newrow = row + arr[i][0];
+            int newcol = column + arr[i][1];
+            if(newrow >=0 && newrow < n && newcol >= 0 && newcol < n){
+                ans += solve(n, k-1, newrow, newcol, memo)/8.0;
+            }
+        }
+        memo[row][column][k] = ans;
+        return ans;
+    }
+    double knightProbability(int n, int k, int row, int column) {
+        vector<vector<vector<double>>>memo(n,vector<vector<double>>(n, vector<double>(k+1, -1)));
+        return solve(n, k, row, column, memo);
+    }
+};
