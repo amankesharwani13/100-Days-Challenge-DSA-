@@ -1,0 +1,36 @@
+2096. Step-By-Step Directions From a Binary Tree Node to Another
+class Solution {
+public:
+    int path(TreeNode* root, int value, string & s){
+        if(root == NULL)return 0;
+        if(root->val == value)return 1;
+        s += 'L';
+        auto res = path(root->left, value, s);
+        if(res)return 1;
+        s.pop_back();
+        s += 'R';
+        res = path(root->right, value, s);
+        if(res)return 1;
+        s.pop_back();
+        return 0;
+    }
+    TreeNode* lca(TreeNode* root, int startValue, int destValue){
+        if(root == NULL)return NULL;
+        if(root->val == startValue || root->val == destValue)return root;
+        TreeNode* left = lca(root->left, startValue, destValue);
+        TreeNode* right = lca(root->right, startValue, destValue);
+        if(left && right)return root;
+        return left != NULL ? left : right;
+    }
+    string getDirections(TreeNode* root, int startValue, int destValue) {
+        string ans = "";
+        if(root == NULL)return ans;
+        root = lca(root, startValue, destValue);
+        string p1 = "", p2 = "";
+        path(root, startValue, p1);
+        path(root, destValue, p2);
+        for(int i=0;i<p1.length();i++)p1[i] = 'U';
+        ans = p1+p2;
+        return ans;
+    }
+};
