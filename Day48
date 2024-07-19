@@ -1,0 +1,30 @@
+1380. Lucky Numbers in a Matrix
+class Solution {
+public:
+    vector<int> luckyNumbers (vector<vector<int>>& matrix) {
+        vector<int>ans;
+        unordered_map<int,int>m;
+        for(int i=0;i<matrix.size();i++){
+            int mini = INT_MAX, index = -1;
+            for(int j=0;j<matrix[i].size();j++){
+                if(matrix[i][j] < mini){
+                    mini = matrix[i][j];
+                    index = j;
+                }
+            }
+            m.insert({mini,index});
+        }
+        int maxi = INT_MIN, index = -1;
+        for(auto x:m){
+            if(x.first > maxi){
+                maxi = x.first;
+                index = x.second;
+            }
+        }
+        for(int i=0;i<matrix.size();i++){
+            if(matrix[i][index] > maxi)return ans;
+        }
+        ans.push_back(maxi);
+        return ans;
+    }
+};
